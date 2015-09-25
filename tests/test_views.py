@@ -56,8 +56,11 @@ class ViewTest(BaseTest):
         view_obj.object_list = view_obj.get_queryset()
         context = view_obj.get_context_data(object_list=view_obj.object_list)
         self.assertEqual(context['post_list'][0].title, 'Secondo post')
+        self.assertEqual(context['categories'].count(), 1)
+
         response = view_obj.render_to_response(context)
         self.assertContains(response, context['post_list'][0].get_absolute_url())
+
 
     def test_post_list_view_fallback(self):
         page1, page2 = self.get_pages()
