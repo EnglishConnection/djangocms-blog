@@ -34,6 +34,12 @@ class BaseBlogView(AppConfigMixin, ViewUrlMixin):
         )
         return self.request.build_absolute_uri(url)
 
+    def get_context_data(self, **kwargs):
+        # addition to add always all categories available
+        context = super(BaseBlogView, self).get_context_data(**kwargs)
+        context['categories'] = BlogCategory.objects.active_translations(get_language()).all()
+        return context
+
     def get_queryset(self):
         language = get_language()
         queryset = self.model._default_manager.namespace(
