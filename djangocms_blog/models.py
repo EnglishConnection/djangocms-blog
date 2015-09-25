@@ -165,12 +165,11 @@ class Post(ModelMeta, TranslatableModel):
         return self.safe_translation_getter('title')
 
     def get_absolute_url(self):
-        kwargs = {'year': self.date_published.year,
-                  'month': '%02d' % self.date_published.month,
-                  'day': '%02d' % self.date_published.day,
-                  'slug': self.safe_translation_getter('slug',
-                                                       language_code=get_language(),
-                                                       any_language=True)}
+        kwargs = {
+            'slug': self.safe_translation_getter('slug',
+                                                 language_code=get_language(),
+                                                 any_language=True)
+        }
         return reverse('djangocms_blog:post-detail', kwargs=kwargs)
 
     def save(self, *args, **kwargs):

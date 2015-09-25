@@ -135,19 +135,13 @@ class ModelsTest(BaseTest):
 
         with override('en'):
             post.set_current_language(get_language())
-            kwargs = {'year': post.date_published.year,
-                      'month': '%02d' % post.date_published.month,
-                      'day': '%02d' % post.date_published.day,
-                      'slug': post.safe_translation_getter('slug', any_language=get_language())}
+            kwargs = {'slug': post.safe_translation_getter('slug', any_language=get_language())}
             url_en = reverse('djangocms_blog:post-detail', kwargs=kwargs)
             self.assertEqual(url_en, post.get_absolute_url())
 
         with override('it'):
             post.set_current_language(get_language())
-            kwargs = {'year': post.date_published.year,
-                      'month': '%02d' % post.date_published.month,
-                      'day': '%02d' % post.date_published.day,
-                      'slug': post.safe_translation_getter('slug', any_language=get_language())}
+            kwargs = {'slug': post.safe_translation_getter('slug', any_language=get_language())}
             url_it = reverse('djangocms_blog:post-detail', kwargs=kwargs)
             self.assertEqual(url_it, post.get_absolute_url())
             self.assertNotEqual(url_it, url_en)
